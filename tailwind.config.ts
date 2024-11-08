@@ -9,18 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-sunburst": "radial-gradient(circle at 50% 50%, var(--tw-gradient-stops))",
-        "gradient-bluemist": "linear-gradient(to bottom, var(--tw-gradient-stops))",
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        "aqua-pastel": "#D0F4F5",
-        "aqua-pastel-light": "#E6FBFC",
-        "lavender-pastel": "#E4DBFF",
-        "lavender-pastel-light": "#F2F0FF",
-        "sunshine-pastel": "#FFF6D9",
-        "sunshine-pastel-light": "#FFFDF2",
-      },
-    },
+        sky: "#C3EBFA",
+        skyLight: "#EDF9FD",
+        purple: "#CFCEFF",
+        purpleLight: "#F1F0FF",
+        yellow: "#FAE27C",
+        yellowLight: "#FEFCE8",
+      },},
   },
   plugins: [],
 };
