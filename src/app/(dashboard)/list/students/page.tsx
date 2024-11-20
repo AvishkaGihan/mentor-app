@@ -122,7 +122,7 @@ const StudentListPage = async ({
         class: true,
       },
       take: ITEM_PER_PAGE,
-      skip: ITEM_PER_PAGE * (Number(p) - 1), // Convert string to number
+      skip: ITEM_PER_PAGE * (Number(p) - 1),
     }),
     prisma.student.count({
       where: query,
