@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client";
 
 import { deleteSubject } from "@/lib/actions";
@@ -14,6 +13,7 @@ import {
   useState,
 } from "react";
 import { toast } from "react-toastify";
+import { FormContainerProps } from "./FormContainer";
 
 const deleteActionMap: { [key: string]: any } = {
   subject: deleteSubject,
@@ -30,12 +30,6 @@ const deleteActionMap: { [key: string]: any } = {
   // announcement: deleteSubject,
 };
 
-const TeacherForm = dynamic(() => import("./forms/TeacherForm"), {
-  loading: () => <h1>Loading...</h1>,
-});
-const StudentForm = dynamic(() => import("./forms/StudentForm"), {
-  loading: () => <h1>Loading...</h1>,
-});
 const SubjectForm = dynamic(() => import("./forms/SubjectForm"), {
   loading: () => <h1>Loading...</h1>,
 });
@@ -44,17 +38,17 @@ const forms: {
   [key: string]: (
     setOpen: Dispatch<SetStateAction<boolean>>,
     type: "create" | "update",
-    data?: any
+    data?: any,
+    relatedData?: any
   ) => JSX.Element;
 } = {
-  subject: (setOpen, type, data) => (
-    <SubjectForm type={type} data={data} setOpen={setOpen} />
-  ),
-  teacher: (setOpen, type, data) => (
-    <TeacherForm type={type} data={data} setOpen={setOpen} />
-  ),
-  student: (setOpen, type, data) => (
-    <StudentForm type={type} data={data} setOpen={setOpen} />
+  subject: (setOpen, type, data, relatedData) => (
+    <SubjectForm
+      type={type}
+      data={data}
+      setOpen={setOpen}
+      relatedData={relatedData}
+    />
   ),
 };
 
@@ -63,24 +57,8 @@ const FormModal = ({
   type,
   data,
   id,
-}: {
-  table:
-    | "teacher"
-    | "student"
-    | "parent"
-    | "subject"
-    | "class"
-    | "lesson"
-    | "exam"
-    | "assignment"
-    | "result"
-    | "attendance"
-    | "event"
-    | "announcement";
-  type: "create" | "update" | "delete";
-  data?: any;
-  id?: number | string;
-}) => {
+  relatedData,
+}: FormContainerProps & { relatedData?: any }) => {
   const size = type === "create" ? "w-8 h-8" : "w-7 h-7";
   const bgColor =
     type === "create"
@@ -118,7 +96,7 @@ const FormModal = ({
         </button>
       </form>
     ) : type === "create" || type === "update" ? (
-      forms[table](setOpen, type, data)
+      forms[table](setOpen, type, data, relatedData)
     ) : (
       "Form not found!"
     );
