@@ -101,7 +101,9 @@ const FormModal = ({
 
     useEffect(() => {
       if (state.success) {
-        toast(`Subject has been deleted!`);
+        toast(
+          `${table.charAt(0).toUpperCase() + table.slice(1)} has been deleted!`
+        );
         setOpen(false);
         router.refresh();
       }
