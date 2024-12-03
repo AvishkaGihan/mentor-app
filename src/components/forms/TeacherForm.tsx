@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import InputField from "../InputField";
-import Image from "next/image";
 import { teacherSchema, TeacherSchema } from "@/lib/formValidationSchemas";
 import { Dispatch, SetStateAction, useActionState, useEffect } from "react";
 import { createTeacher, updateTeacher } from "@/lib/actions";
