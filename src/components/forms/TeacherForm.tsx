@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import InputField from "../InputField";
 import Image from "next/image";
-import { teacherSchema, TeacherSchema } from "@/lib/formValidationSchemas";
 import {
   Dispatch,
   SetStateAction,
@@ -12,6 +12,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { teacherSchema, TeacherSchema } from "@/lib/formValidationSchemas";
 import { createTeacher, updateTeacher } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -24,10 +25,8 @@ const TeacherForm = ({
   relatedData,
 }: {
   type: "create" | "update";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   relatedData?: any;
 }) => {
   const {
@@ -38,8 +37,7 @@ const TeacherForm = ({
     resolver: zodResolver(teacherSchema),
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [imd, setImg] = useState<any>();
+  const [img, setImg] = useState<any>();
 
   const [state, formAction] = useActionState(
     type === "create" ? createTeacher : updateTeacher,
@@ -51,18 +49,18 @@ const TeacherForm = ({
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-    formAction(data);
+    formAction({ ...data, img: img?.secure_url });
   });
 
   const router = useRouter();
 
   useEffect(() => {
     if (state.success) {
-      toast(`Teacher has been ${type === "create" ? "created" : "updated"}`);
+      toast(`Teacher has been ${type === "create" ? "created" : "updated"}!`);
       setOpen(false);
       router.refresh();
     }
-  }, [state, type, router, setOpen]);
+  }, [state, router, type, setOpen]);
 
   const { subjects } = relatedData;
 
@@ -140,11 +138,21 @@ const TeacherForm = ({
         <InputField
           label="Birthday"
           name="birthday"
-          defaultValue={data?.birthday}
+          defaultValue={data?.birthday.toISOString().split("T")[0]}
           register={register}
           error={errors.birthday}
           type="date"
         />
+        {data && (
+          <InputField
+            label="Id"
+            name="id"
+            defaultValue={data?.id}
+            register={register}
+            error={errors?.id}
+            hidden
+          />
+        )}
         <div className="flex flex-col gap-2 w-full md:w-1/4">
           <label className="text-xs text-gray-500">Sex</label>
           <select
@@ -152,8 +160,8 @@ const TeacherForm = ({
             {...register("sex")}
             defaultValue={data?.sex}
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="MALE">Male</option>
+            <option value="FEMALE">Female</option>
           </select>
           {errors.sex?.message && (
             <p className="text-xs text-red-400">
@@ -170,7 +178,7 @@ const TeacherForm = ({
             defaultValue={data?.subjects}
           >
             {subjects.map((subject: { id: number; name: string }) => (
-              <option key={subject.id} value={subject.id}>
+              <option value={subject.id} key={subject.id}>
                 {subject.name}
               </option>
             ))}
@@ -201,7 +209,9 @@ const TeacherForm = ({
           }}
         </CldUploadWidget>
       </div>
-
+      {state.error && (
+        <span className="text-red-500">Something went wrong!</span>
+      )}
       <button className="bg-blue-400 text-white p-2 rounded-md">
         {type === "create" ? "Create" : "Update"}
       </button>
