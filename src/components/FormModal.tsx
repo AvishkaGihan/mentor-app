@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { deleteClass, deleteSubject } from "@/lib/actions";
+import { deleteClass, deleteSubject, deleteTeacher } from "@/lib/actions";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,7 @@ import { FormContainerProps } from "./FormContainer";
 const deleteActionMap: { [key: string]: any } = {
   subject: deleteSubject,
   class: deleteClass,
-  // teacher: deleteTeacher,
+  teacher: deleteTeacher,
   // student: deleteStudent,
   // exam: deleteExam,
   // parent: deleteSubject,
@@ -34,6 +34,9 @@ const SubjectForm = dynamic(() => import("./forms/SubjectForm"), {
   loading: () => <h1>Loading...</h1>,
 });
 const ClassForm = dynamic(() => import("./forms/ClassForm"), {
+  loading: () => <h1>Loading...</h1>,
+});
+const TeacherForm = dynamic(() => import("./forms/TeacherForm"), {
   loading: () => <h1>Loading...</h1>,
 });
 
@@ -55,6 +58,14 @@ const forms: {
   ),
   class: (setOpen, type, data, relatedData) => (
     <ClassForm
+      type={type}
+      data={data}
+      setOpen={setOpen}
+      relatedData={relatedData}
+    />
+  ),
+  teacher: (setOpen, type, data, relatedData) => (
+    <TeacherForm
       type={type}
       data={data}
       setOpen={setOpen}
