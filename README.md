@@ -1,36 +1,167 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mentor School Management System
 
-## Getting Started
+A comprehensive web application for managing educational institutions efficiently, built with cutting-edge web technologies.
 
-First, run the development server:
+![Mentor Dashboard](public/dashboard.png)
+
+## 🌟 Overview
+
+Mentor is a powerful school management system designed to streamline administrative tasks, enhance communication, and provide insightful analytics for educational institutions.
+
+## ✨ Features
+
+- 🔐 **Robust User Authentication & Authorization**
+
+  - Multi-role support (Admin, Teacher, Student, Parent)
+  - Secure access control with Clerk authentication
+
+- 📊 **Interactive Dashboards**
+
+  - Real-time performance charts and analytics
+  - Personalized insights for different user roles
+
+- 👥 **Comprehensive User Management**
+
+  - Detailed profiles for students, teachers, and parents
+  - Easy onboarding and profile management
+
+- 📚 **Academic Management**
+
+  - Class and subject organization
+  - Lesson planning and tracking
+  - Curriculum management
+
+- 📝 **Assignment & Exam Management**
+
+  - Create, distribute, and grade assignments
+  - Exam scheduling and result tracking
+
+- 📅 **Event Calendar & Scheduling**
+
+  - School-wide and personalized event tracking
+  - Integrated scheduling system
+
+- 📢 **Communication Tools**
+
+  - Centralized announcement system
+  - Cross-role communication channels
+
+- ✔️ **Attendance Tracking**
+
+  - Precise student attendance monitoring
+  - Automated reporting
+
+- 📊 **Performance Analytics**
+
+  - Comprehensive student performance insights
+  - Customizable reporting
+
+- 📱 **Fully Responsive Design**
+  - Seamless experience across devices
+  - Mobile-friendly interface
+
+## 🚀 Tech Stack
+
+| Category             | Technology         |
+| -------------------- | ------------------ |
+| **Framework**        | Next.js 14         |
+| **Language**         | TypeScript         |
+| **Database**         | PostgreSQL         |
+| **ORM**              | Prisma             |
+| **Authentication**   | Clerk              |
+| **Styling**          | Tailwind CSS       |
+| **Charting**         | Recharts           |
+| **Calendar**         | React Big Calendar |
+| **Form Management**  | React Hook Form    |
+| **File Storage**     | Cloudinary         |
+| **Containerization** | Docker             |
+
+## 🔧 Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Node.js (v18 or later)
+- pnpm
+- Docker (optional, for containerized deployment)
+
+## 🛠️ Installation & Setup
+
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/AvishkaGihan/mentor-app.git
+cd mentor-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Environment Configuration
 
-## Learn More
+Create a `.env` file in the project root and add the following variables:
 
-To learn more about Next.js, take a look at the following resources:
+```
+DATABASE_URL=your_postgresql_connection_string
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Database Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Run migrations
+pnpm prisma migrate dev --name init
 
-## Deploy on Vercel
+# Seed the database
+pnpm prisma db seed
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 5. Start Development Server
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🐳 Docker Deployment
+
+### Build Docker Image
+
+```bash
+docker build -t mentor-app .
+```
+
+### Run Docker Container
+
+```bash
+docker run -p 3000:3000 mentor-app
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## 📧 Contact
+
+Avishka Gihan - [avishkag18@gmail.com](mailto:avishkag18@gmail.com)
+
+Project Link: [https://github.com/AvishkaGihan/mentor-app](https://github.com/AvishkaGihan/mentor-app)
