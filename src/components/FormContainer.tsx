@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import FormModal from "./FormModal";
+import { auth } from "@clerk/nextjs/server";
 
 export type FormContainerProps = {
   table:
@@ -69,14 +70,27 @@ const FormContainer = async ({ table, type, data, id }: FormContainerProps) => {
         });
         const studentClasses = await prisma.class.findMany({
           include: {
-            _count: {
-              select: {
-                students: true,
-              },
-            },
+            _count: {},
           },
         });
         relatedData = { grades: studentGrades, classes: studentClasses };
+        break;
+      case "exam":
+        const { userId, sessionClaims } = await auth();
+        const role = (sessionClaims?.metadata as { role?: string })?.role;
+
+        const examLessons = await prisma.lesson.findMany({
+          where: {
+            ...(role === "teacher" ? { teacherId: userId! } : {}),
+          },
+          select: {
+            id: true,
+            name: true,
+          },
+        });
+
+        relatedData = { lessons: examLessons };
+
         break;
 
       default:
